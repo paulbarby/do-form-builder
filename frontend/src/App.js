@@ -802,65 +802,61 @@ const FormBuilder = () => {
               <div className="bg-white rounded-lg shadow p-4 mb-6">
                 <h2 className="text-lg font-medium text-gray-900 mb-3">Form Layout</h2>
                 
-                <DragDropContext onDragEnd={handleDragEnd}>
-                  <Droppable droppableId="FORM_FIELDS">
-                    {(provided, snapshot) => (
-                      <div 
-                        className={`form-area ${snapshot.isDraggingOver ? 'active-drag-over' : ''}`}
-                        ref={provided.innerRef}
-                        {...provided.droppableProps}
-                      >
-                        {formFields.length === 0 && (
-                          <div className="text-center text-gray-500 py-10">
-                            <p>Click on field buttons to add fields to your form</p>
-                            <p className="text-sm mt-2 text-gray-400">Fields can be reordered by dragging</p>
+                <div className="form-area">
+                  {formFields.length === 0 && (
+                    <div className="text-center text-gray-500 py-10">
+                      <p>Click on field buttons to add fields to your form</p>
+                      <p className="text-sm mt-2 text-gray-400">Fields can be reordered using the up/down buttons</p>
+                    </div>
+                  )}
+                  
+                  {formFields.map((field, index) => (
+                    <div
+                      key={field.id}
+                      className={`field-item ${selectedFieldId === field.id ? 'selected-field' : ''}`}
+                      onClick={() => selectField(field.id)}
+                    >
+                      <div className="flex justify-between items-center">
+                        <div className="flex items-center">
+                          <div className="mr-2">
+                            <button 
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                moveFieldUp(index);
+                              }}
+                              disabled={index === 0}
+                              className="text-gray-400 hover:text-gray-600 disabled:opacity-50"
+                            >
+                              ↑
+                            </button>
+                            <button 
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                moveFieldDown(index);
+                              }}
+                              disabled={index === formFields.length - 1}
+                              className="text-gray-400 hover:text-gray-600 disabled:opacity-50"
+                            >
+                              ↓
+                            </button>
                           </div>
-                        )}
-                        
-                        {formFields.map((field, index) => (
-                          <Draggable
-                            key={field.id}
-                            draggableId={field.id}
-                            index={index}
-                          >
-                            {(provided, snapshot) => (
-                              <div
-                                className={`field-item ${snapshot.isDragging ? 'dragging' : ''} ${selectedFieldId === field.id ? 'selected-field' : ''}`}
-                                ref={provided.innerRef}
-                                {...provided.draggableProps}
-                                {...provided.dragHandleProps}
-                                onClick={() => selectField(field.id)}
-                              >
-                                <div className="flex justify-between items-center">
-                                  <div className="flex items-center">
-                                    <span className="mr-2 text-gray-400">
-                                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-4 h-4">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 4v16M17 4v16M3 8h18M3 16h18" />
-                                      </svg>
-                                    </span>
-                                    <div>
-                                      <span className="font-medium">{field.label}</span>
-                                      <span className="text-xs text-gray-500 ml-2">({field.type})</span>
-                                      {field.required && <span className="text-red-500 ml-1">*</span>}
-                                    </div>
-                                  </div>
-                                  <div className="flex space-x-2">
-                                    {field.conditions && (
-                                      <span className="text-xs px-2 py-1 bg-blue-100 text-blue-800 rounded-full">
-                                        Conditional
-                                      </span>
-                                    )}
-                                  </div>
-                                </div>
-                              </div>
-                            )}
-                          </Draggable>
-                        ))}
-                        {provided.placeholder}
+                          <div>
+                            <span className="font-medium">{field.label}</span>
+                            <span className="text-xs text-gray-500 ml-2">({field.type})</span>
+                            {field.required && <span className="text-red-500 ml-1">*</span>}
+                          </div>
+                        </div>
+                        <div className="flex space-x-2">
+                          {field.conditions && (
+                            <span className="text-xs px-2 py-1 bg-blue-100 text-blue-800 rounded-full">
+                              Conditional
+                            </span>
+                          )}
+                        </div>
                       </div>
-                    )}
-                  </Droppable>
-                </DragDropContext>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
             
