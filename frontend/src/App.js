@@ -853,12 +853,24 @@ const FormBuilder = () => {
                             {field.required && <span className="text-red-500 ml-1">*</span>}
                           </div>
                         </div>
-                        <div className="flex space-x-2">
+                        <div className="flex space-x-2 items-center">
                           {field.conditions && (
                             <span className="text-xs px-2 py-1 bg-blue-100 text-blue-800 rounded-full">
                               Conditional
                             </span>
                           )}
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              if (window.confirm(`Delete the field "${field.label}"?`)) {
+                                deleteField(field.id);
+                              }
+                            }}
+                            className="text-gray-400 hover:text-red-600 ml-2"
+                            title="Delete field"
+                          >
+                            ✕
+                          </button>
                         </div>
                       </div>
                     </div>
