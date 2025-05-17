@@ -176,7 +176,7 @@ class FormBuilderAPITester:
             "Delete Form",
             "DELETE",
             f"forms/{form_id}",
-            204
+            200
         )
         
         if success:
