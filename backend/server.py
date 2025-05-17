@@ -141,15 +141,24 @@ async def update_form(form_id: str, form_data: FormCreate):
             "updated_at": datetime.utcnow()
         }
         
+        # Try to update by id field first
         result = await db.forms.update_one(
             {"id": form_id},
             {"$set": form_dict}
         )
         
+        # If not found, try to update by MongoDB _id
+        if result.modified_count == 0:
+            result = await db.forms.update_one(
+                {"_id": form_id},
+                {"$set": form_dict}
+            )
+            
         if result.modified_count == 0:
             raise HTTPException(status_code=404, detail="Form not found")
             
-        updated_form = await db.forms.find_one({"id": form_id})
+        # Get the updated form
+        updated_form = await get_form(form_id)
         return updated_form
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
