@@ -703,6 +703,7 @@ const FormBuilder = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
+      {console.log("Rendering with activeTab:", activeTab)}
       <div className="bg-white shadow rounded-lg p-6 mb-6">
         <div className="flex justify-between items-center mb-6">
           <div>
