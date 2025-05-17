@@ -792,7 +792,66 @@ const FormBuilder = () => {
           <DragDropContext onDragEnd={handleDragEnd}>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
               <div className="md:col-span-1">
-                <FieldTypesSidebar />
+                <div className="bg-white rounded-lg shadow p-4">
+                  <h2 className="text-lg font-medium text-gray-900 mb-3">Available Fields</h2>
+                  <Droppable droppableId="FIELD_TYPES" isDropDisabled={true}>
+                    {(provided) => (
+                      <div ref={provided.innerRef} {...provided.droppableProps}>
+                        {FIELD_TYPES.map((fieldType, index) => (
+                          <Draggable
+                            key={fieldType.id}
+                            draggableId={`type-${fieldType.id}`}
+                            index={index}
+                          >
+                            {(provided, snapshot) => (
+                              <div
+                                className={`sidebar-item ${snapshot.isDragging ? "dragging" : ""}`}
+                                ref={provided.innerRef}
+                                {...provided.draggableProps}
+                                {...provided.dragHandleProps}
+                              >
+                                {fieldType.label}
+                              </div>
+                            )}
+                          </Draggable>
+                        ))}
+                        {provided.placeholder}
+                      </div>
+                    )}
+                  </Droppable>
+                </div>
+                <div className="mt-4 p-4 bg-white rounded-lg shadow">
+                  <button 
+                    className="w-full btn btn-secondary mb-2"
+                    onClick={() => {
+                      const newField = createField('text', formFields);
+                      setFormFields([...formFields, newField]);
+                      setSelectedFieldId(newField.id);
+                    }}
+                  >
+                    Add Text Field
+                  </button>
+                  <button 
+                    className="w-full btn btn-secondary mb-2"
+                    onClick={() => {
+                      const newField = createField('select', formFields);
+                      setFormFields([...formFields, newField]);
+                      setSelectedFieldId(newField.id);
+                    }}
+                  >
+                    Add Dropdown
+                  </button>
+                  <button 
+                    className="w-full btn btn-secondary"
+                    onClick={() => {
+                      const newField = createField('date', formFields);
+                      setFormFields([...formFields, newField]);
+                      setSelectedFieldId(newField.id);
+                    }}
+                  >
+                    Add Date Field
+                  </button>
+                </div>
               </div>
               
               <div className="md:col-span-2">
@@ -808,7 +867,7 @@ const FormBuilder = () => {
                       >
                         {formFields.length === 0 && (
                           <div className="text-center text-gray-500 py-10">
-                            Drag fields here to build your form
+                            Drag fields here or use buttons to add fields
                           </div>
                         )}
                         
