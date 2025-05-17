@@ -882,7 +882,28 @@ const FormBuilder = () => {
         )}
         
         {activeTab === 'json' && (
-          <JsonDisplay json={generateCleanJson()} />
+          <div className="container mx-auto px-4">
+            <div className="bg-white rounded-lg shadow p-6 mb-4">
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-lg font-medium text-gray-900">Form JSON</h2>
+                <button 
+                  className="btn btn-secondary text-sm"
+                  onClick={() => {
+                    navigator.clipboard.writeText(JSON.stringify(generateCleanJson(), null, 2));
+                    setSaveStatus('JSON copied to clipboard!');
+                    setTimeout(() => setSaveStatus(''), 2000);
+                  }}
+                >
+                  Copy JSON
+                </button>
+              </div>
+              <div className="bg-gray-800 text-gray-100 p-4 rounded-lg overflow-auto max-h-[600px]">
+                <pre className="whitespace-pre-wrap text-sm">
+                  {JSON.stringify(generateCleanJson(), null, 2)}
+                </pre>
+              </div>
+            </div>
+          </div>
         )}
       </div>
     </div>
