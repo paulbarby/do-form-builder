@@ -113,9 +113,20 @@ async def get_forms():
 @api_router.get("/forms/{form_id}", response_model=Form)
 async def get_form(form_id: str):
     try:
+        # Try to find the form by id field first
         form = await db.forms.find_one({"id": form_id})
+        
+        # If not found, check for MongoDB _id (but as string)
+        if not form:
+            form = await db.forms.find_one({"_id": form_id})
+            
         if not form:
             raise HTTPException(status_code=404, detail="Form not found")
+            
+        # Convert MongoDB _id to string id for response if needed
+        if "_id" in form and "id" not in form:
+            form["id"] = str(form.pop("_id"))
+            
         return form
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
