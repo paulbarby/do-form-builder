@@ -6,6 +6,29 @@ import { v4 as uuidv4 } from 'uuid';
 import "./App.css";
 import axios from "axios";
 
+// Fix for react-beautiful-dnd issue with StrictMode in React 18
+// See: https://github.com/atlassian/react-beautiful-dnd/issues/2399
+const useStrictDroppable = (enabled = false) => {
+  useEffect(() => {
+    if (!enabled) {
+      return;
+    }
+    
+    // This is a hack for react-beautiful-dnd to work with React 18 StrictMode
+    const originalProto = window.HTMLElement.prototype.insertBefore;
+    window.HTMLElement.prototype.insertBefore = function(newNode, refNode) {
+      if (refNode === null) {
+        return this.appendChild(newNode);
+      }
+      return originalProto.call(this, newNode, refNode);
+    };
+    
+    return () => {
+      window.HTMLElement.prototype.insertBefore = originalProto;
+    };
+  }, [enabled]);
+};
+
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
