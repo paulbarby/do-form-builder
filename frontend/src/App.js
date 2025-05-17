@@ -813,35 +813,18 @@ const FormBuilder = () => {
                   </div>
                 </div>
                 <div className="mt-4 p-4 bg-white rounded-lg shadow">
+                  <h2 className="text-lg font-medium text-gray-900 mb-3">Form Actions</h2>
                   <button 
-                    className="w-full btn btn-secondary mb-2"
-                    onClick={() => {
-                      const newField = createField('text', formFields);
-                      setFormFields([...formFields, newField]);
-                      setSelectedFieldId(newField.id);
-                    }}
+                    className="w-full btn btn-primary mb-2"
+                    onClick={loadExample}
                   >
-                    Add Text Field
-                  </button>
-                  <button 
-                    className="w-full btn btn-secondary mb-2"
-                    onClick={() => {
-                      const newField = createField('select', formFields);
-                      setFormFields([...formFields, newField]);
-                      setSelectedFieldId(newField.id);
-                    }}
-                  >
-                    Add Dropdown
+                    Load Example Form
                   </button>
                   <button 
                     className="w-full btn btn-secondary"
-                    onClick={() => {
-                      const newField = createField('date', formFields);
-                      setFormFields([...formFields, newField]);
-                      setSelectedFieldId(newField.id);
-                    }}
+                    onClick={loadFromJson}
                   >
-                    Add Date Field
+                    Import from JSON
                   </button>
                 </div>
               </div>
