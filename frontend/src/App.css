@@ -40,7 +40,7 @@
 }
 
 .json-preview {
-  @apply bg-gray-800 text-gray-100 p-4 rounded-lg overflow-auto max-h-[300px];
+  @apply bg-gray-800 text-gray-100 p-4 rounded-lg overflow-auto max-h-[600px] w-full whitespace-pre-wrap;
 }
 
 .field-wrapper {
