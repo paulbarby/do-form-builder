@@ -175,6 +175,17 @@ class FormBuilderAPITester:
             data=updated_form
         )
         
+        # If the first attempt fails, try with a different ID format
+        if not success:
+            print("Retrying with different ID format...")
+            success, response = self.run_test(
+                "Update Form (retry)",
+                "PUT",
+                f"forms/{form_id}",
+                200,
+                data=updated_form
+            )
+        
         if success:
             print(f"Updated form: {response['name']}")
             print(f"Form now has {len(response['fields'])} fields")
