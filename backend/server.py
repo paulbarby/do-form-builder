@@ -166,9 +166,16 @@ async def update_form(form_id: str, form_data: FormCreate):
 @api_router.delete("/forms/{form_id}")
 async def delete_form(form_id: str):
     try:
+        # Try to delete by id field first
         result = await db.forms.delete_one({"id": form_id})
+        
+        # If not found, try to delete by MongoDB _id
+        if result.deleted_count == 0:
+            result = await db.forms.delete_one({"_id": form_id})
+            
         if result.deleted_count == 0:
             raise HTTPException(status_code=404, detail="Form not found")
+            
         return {"message": "Form deleted successfully"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
