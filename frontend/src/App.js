@@ -589,6 +589,11 @@ const FormBuilder = () => {
   const [activeTab, setActiveTab] = useState('builder');
   const [saveStatus, setSaveStatus] = useState('');
   
+  // Debug useEffect to track activeTab changes
+  useEffect(() => {
+    console.log("activeTab changed to:", activeTab);
+  }, [activeTab]);
+  
   // Get the selected field
   const selectedField = formFields.find(f => f.id === selectedFieldId);
   
