@@ -823,16 +823,17 @@ const FormBuilder = () => {
                     >
                       <div className="flex justify-between items-center">
                         <div className="flex items-center">
-                          <div className="mr-2">
+                          <div className="mr-2 flex flex-col">
                             <button 
                               onClick={(e) => {
                                 e.stopPropagation();
                                 moveFieldUp(index);
                               }}
                               disabled={index === 0}
-                              className="text-gray-400 hover:text-gray-600 disabled:opacity-50"
+                              className="px-1 py-0 text-gray-400 hover:text-blue-600 disabled:opacity-30 disabled:hover:text-gray-400"
+                              title="Move field up"
                             >
-                              ↑
+                              ▲
                             </button>
                             <button 
                               onClick={(e) => {
@@ -840,9 +841,10 @@ const FormBuilder = () => {
                                 moveFieldDown(index);
                               }}
                               disabled={index === formFields.length - 1}
-                              className="text-gray-400 hover:text-gray-600 disabled:opacity-50"
+                              className="px-1 py-0 text-gray-400 hover:text-blue-600 disabled:opacity-30 disabled:hover:text-gray-400"
+                              title="Move field down"
                             >
-                              ↓
+                              ▼
                             </button>
                           </div>
                           <div>
