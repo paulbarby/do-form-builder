@@ -54,9 +54,14 @@ const createField = (type, formFields = []) => {
 
 // Field Configuration Panel
 const FieldConfigPanel = ({ field, updateField, formFields, deleteField }) => {
-  const { register, watch, setValue, handleSubmit } = useForm({
+  const { register, watch, setValue, handleSubmit, reset } = useForm({
     defaultValues: field
   });
+  
+  // Update form values when selected field changes
+  useEffect(() => {
+    reset(field);
+  }, [field, reset]);
   
   const fieldType = watch('type');
   
