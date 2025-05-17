@@ -864,15 +864,22 @@ const FormBuilder = () => {
                   <h2 className="text-lg font-medium text-gray-900 mb-3">Form Layout</h2>
                   
                   <Droppable droppableId="FORM_FIELDS">
-                    {(provided) => (
+                    {(provided, snapshot) => (
                       <div 
-                        className="form-area"
+                        className={`form-area ${snapshot.isDraggingOver ? 'active-drag-over' : ''}`}
                         ref={provided.innerRef}
                         {...provided.droppableProps}
                       >
-                        {formFields.length === 0 && (
+                        {formFields.length === 0 && !snapshot.isDraggingOver && (
                           <div className="text-center text-gray-500 py-10">
-                            Drag fields here or use buttons to add fields
+                            <p>Drag fields here or use buttons to add fields</p>
+                            <p className="text-sm mt-2 text-gray-400">Fields can be reordered by dragging</p>
+                          </div>
+                        )}
+                        
+                        {formFields.length === 0 && snapshot.isDraggingOver && (
+                          <div className="text-center text-blue-500 py-10">
+                            <p>Drop field here</p>
                           </div>
                         )}
                         
@@ -891,16 +898,25 @@ const FormBuilder = () => {
                                 onClick={() => selectField(field.id)}
                               >
                                 <div className="flex justify-between items-center">
-                                  <div>
-                                    <span className="font-medium">{field.label}</span>
-                                    <span className="text-xs text-gray-500 ml-2">({field.type})</span>
-                                    {field.required && <span className="text-red-500 ml-1">*</span>}
-                                  </div>
-                                  {field.conditions && (
-                                    <span className="text-xs px-2 py-1 bg-blue-100 text-blue-800 rounded-full">
-                                      Conditional
+                                  <div className="flex items-center">
+                                    <span className="mr-2 text-gray-400">
+                                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-4 h-4">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 4v16M17 4v16M3 8h18M3 16h18" />
+                                      </svg>
                                     </span>
-                                  )}
+                                    <div>
+                                      <span className="font-medium">{field.label}</span>
+                                      <span className="text-xs text-gray-500 ml-2">({field.type})</span>
+                                      {field.required && <span className="text-red-500 ml-1">*</span>}
+                                    </div>
+                                  </div>
+                                  <div className="flex space-x-2">
+                                    {field.conditions && (
+                                      <span className="text-xs px-2 py-1 bg-blue-100 text-blue-800 rounded-full">
+                                        Conditional
+                                      </span>
+                                    )}
+                                  </div>
                                 </div>
                               </div>
                             )}
