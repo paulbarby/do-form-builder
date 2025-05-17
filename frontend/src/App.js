@@ -773,6 +773,41 @@ const FormBuilder = () => {
           </div>
         </div>
         
+        {activeTab === 'json' && (
+          <div className="container mx-auto">
+            <div className="bg-white rounded-lg shadow p-6 mb-4">
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-lg font-medium text-gray-900">Form JSON</h2>
+                <button 
+                  className="btn btn-secondary text-sm"
+                  onClick={() => {
+                    navigator.clipboard.writeText(JSON.stringify(generateCleanJson(), null, 2));
+                    setSaveStatus('JSON copied to clipboard!');
+                    setTimeout(() => setSaveStatus(''), 2000);
+                  }}
+                >
+                  Copy JSON
+                </button>
+              </div>
+              {formFields.length > 0 ? (
+                <div className="bg-gray-800 p-4 rounded-lg overflow-auto max-h-[600px]">
+                  <code className="whitespace-pre-wrap text-sm text-white block font-mono">
+{JSON.stringify(generateCleanJson(), null, 2)}
+                  </code>
+                </div>
+              ) : (
+                <div className="text-center text-gray-500 py-10">
+                  <p>No fields added yet. Add some fields to see the JSON representation.</p>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+        
+        {activeTab === 'preview' && (
+          <FormPreview formFields={formFields} />
+        )}
+        
         {activeTab === 'builder' && (
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             <div className="md:col-span-1">
