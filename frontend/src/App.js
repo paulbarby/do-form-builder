@@ -789,50 +789,50 @@ const FormBuilder = () => {
         </div>
         
         {activeTab === 'builder' && (
-          <DragDropContext onDragEnd={handleDragEnd}>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-              <div className="md:col-span-1">
-                <div className="bg-white rounded-lg shadow p-4">
-                  <h2 className="text-lg font-medium text-gray-900 mb-3">Available Fields</h2>
-                  <p className="text-gray-500 text-sm mb-4">Click buttons below to add fields to your form</p>
-                  
-                  <div className="grid grid-cols-2 gap-2">
-                    {FIELD_TYPES.map((fieldType) => (
-                      <button
-                        key={fieldType.id}
-                        className="btn btn-secondary text-sm py-2"
-                        onClick={() => {
-                          const newField = createField(fieldType.id, formFields);
-                          setFormFields([...formFields, newField]);
-                          setSelectedFieldId(newField.id);
-                        }}
-                      >
-                        {fieldType.label}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-                <div className="mt-4 p-4 bg-white rounded-lg shadow">
-                  <h2 className="text-lg font-medium text-gray-900 mb-3">Form Actions</h2>
-                  <button 
-                    className="w-full btn btn-primary mb-2"
-                    onClick={loadExample}
-                  >
-                    Load Example Form
-                  </button>
-                  <button 
-                    className="w-full btn btn-secondary"
-                    onClick={loadFromJson}
-                  >
-                    Import from JSON
-                  </button>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div className="md:col-span-1">
+              <div className="bg-white rounded-lg shadow p-4">
+                <h2 className="text-lg font-medium text-gray-900 mb-3">Available Fields</h2>
+                <p className="text-gray-500 text-sm mb-4">Click buttons below to add fields to your form</p>
+                
+                <div className="grid grid-cols-2 gap-2">
+                  {FIELD_TYPES.map((fieldType) => (
+                    <button
+                      key={fieldType.id}
+                      className="btn btn-secondary text-sm py-2"
+                      onClick={() => {
+                        const newField = createField(fieldType.id, formFields);
+                        setFormFields([...formFields, newField]);
+                        setSelectedFieldId(newField.id);
+                      }}
+                    >
+                      {fieldType.label}
+                    </button>
+                  ))}
                 </div>
               </div>
-              
-              <div className="md:col-span-2">
-                <div className="bg-white rounded-lg shadow p-4 mb-6">
-                  <h2 className="text-lg font-medium text-gray-900 mb-3">Form Layout</h2>
-                  
+              <div className="mt-4 p-4 bg-white rounded-lg shadow">
+                <h2 className="text-lg font-medium text-gray-900 mb-3">Form Actions</h2>
+                <button 
+                  className="w-full btn btn-primary mb-2"
+                  onClick={loadExample}
+                >
+                  Load Example Form
+                </button>
+                <button 
+                  className="w-full btn btn-secondary"
+                  onClick={loadFromJson}
+                >
+                  Import from JSON
+                </button>
+              </div>
+            </div>
+            
+            <div className="md:col-span-2">
+              <div className="bg-white rounded-lg shadow p-4 mb-6">
+                <h2 className="text-lg font-medium text-gray-900 mb-3">Form Layout</h2>
+                
+                <DragDropContext onDragEnd={handleDragEnd}>
                   <Droppable droppableId="FORM_FIELDS">
                     {(provided, snapshot) => (
                       <div 
@@ -840,16 +840,10 @@ const FormBuilder = () => {
                         ref={provided.innerRef}
                         {...provided.droppableProps}
                       >
-                        {formFields.length === 0 && !snapshot.isDraggingOver && (
+                        {formFields.length === 0 && (
                           <div className="text-center text-gray-500 py-10">
-                            <p>Drag fields here or use buttons to add fields</p>
+                            <p>Click on field buttons to add fields to your form</p>
                             <p className="text-sm mt-2 text-gray-400">Fields can be reordered by dragging</p>
-                          </div>
-                        )}
-                        
-                        {formFields.length === 0 && snapshot.isDraggingOver && (
-                          <div className="text-center text-blue-500 py-10">
-                            <p>Drop field here</p>
                           </div>
                         )}
                         
@@ -896,25 +890,25 @@ const FormBuilder = () => {
                       </div>
                     )}
                   </Droppable>
-                </div>
-              </div>
-              
-              <div className="md:col-span-1">
-                {selectedField ? (
-                  <FieldConfigPanel 
-                    field={selectedField} 
-                    updateField={updateField}
-                    formFields={formFields}
-                    deleteField={deleteField}
-                  />
-                ) : (
-                  <div className="property-panel">
-                    <p className="text-gray-500">Select a field to configure its properties</p>
-                  </div>
-                )}
+                </DragDropContext>
               </div>
             </div>
-          </DragDropContext>
+            
+            <div className="md:col-span-1">
+              {selectedField ? (
+                <FieldConfigPanel 
+                  field={selectedField} 
+                  updateField={updateField}
+                  formFields={formFields}
+                  deleteField={deleteField}
+                />
+              ) : (
+                <div className="property-panel">
+                  <p className="text-gray-500">Select a field to configure its properties</p>
+                </div>
+              )}
+            </div>
+          </div>
         )}
         
         {activeTab === 'preview' && (
