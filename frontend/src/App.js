@@ -20,40 +20,6 @@ const FIELD_TYPES = [
   { id: "hidden", label: "Hidden Field" },
 ];
 
-// Component for the available field types sidebar
-const FieldTypesSidebar = () => {
-  return (
-    <div className="bg-white rounded-lg shadow p-4">
-      <h2 className="text-lg font-medium text-gray-900 mb-3">Available Fields</h2>
-      <Droppable droppableId="FIELD_TYPES" isDropDisabled={true}>
-        {(provided) => (
-          <div ref={provided.innerRef} {...provided.droppableProps}>
-            {FIELD_TYPES.map((fieldType, index) => (
-              <Draggable
-                key={fieldType.id}
-                draggableId={`type-${fieldType.id}`}
-                index={index}
-              >
-                {(provided, snapshot) => (
-                  <div
-                    className={`sidebar-item ${snapshot.isDragging ? "dragging" : ""}`}
-                    ref={provided.innerRef}
-                    {...provided.draggableProps}
-                    {...provided.dragHandleProps}
-                  >
-                    {fieldType.label}
-                  </div>
-                )}
-              </Draggable>
-            ))}
-            {provided.placeholder}
-          </div>
-        )}
-      </Droppable>
-    </div>
-  );
-};
-
 // Helper to create a new field
 const createField = (type, formFields = []) => {
   const fieldCount = formFields.filter(f => f.type === type).length + 1;
