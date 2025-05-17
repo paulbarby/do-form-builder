@@ -578,9 +578,6 @@ const JsonDisplay = ({ json }) => {
 
 // Form builder component
 const FormBuilder = () => {
-  // Enable strict droppable fix for React 18
-  useStrictDroppable(true);
-  
   const [formFields, setFormFields] = useState([]);
   const [selectedFieldId, setSelectedFieldId] = useState(null);
   const [formName, setFormName] = useState('New Form');
@@ -590,42 +587,19 @@ const FormBuilder = () => {
   // Get the selected field
   const selectedField = formFields.find(f => f.id === selectedFieldId);
   
-  // Handle drag end event
-  const handleDragEnd = (result) => {
-    const { source, destination, draggableId } = result;
-    
-    console.log('Drag end event:', { source, destination, draggableId });
-    
-    // Dropped outside a droppable area
-    if (!destination) {
-      console.log('Dropped outside droppable area');
-      return;
-    }
-    
-    // Reordering within form fields
-    if (source.droppableId === 'FORM_FIELDS' && destination.droppableId === 'FORM_FIELDS') {
-      console.log('Reordering fields within form');
-      const reorderedFields = Array.from(formFields);
-      const [removed] = reorderedFields.splice(source.index, 1);
-      reorderedFields.splice(destination.index, 0, removed);
-      setFormFields(reorderedFields);
-      return;
-    }
-    
-    // Adding new field from sidebar
-    if (source.droppableId === 'FIELD_TYPES' && destination.droppableId === 'FORM_FIELDS') {
-      console.log('Adding new field from sidebar');
-      const fieldTypeId = draggableId.replace('type-', '');
-      console.log('Field type:', fieldTypeId);
-      
-      const newField = createField(fieldTypeId, formFields);
-      console.log('New field:', newField);
-      
-      const updatedFields = Array.from(formFields);
-      updatedFields.splice(destination.index, 0, newField);
-      setFormFields(updatedFields);
-      setSelectedFieldId(newField.id);
-    }
+  // Functions for manual field reordering
+  const moveFieldUp = (index) => {
+    if (index === 0) return; // Already at the top
+    const newFields = [...formFields];
+    [newFields[index - 1], newFields[index]] = [newFields[index], newFields[index - 1]];
+    setFormFields(newFields);
+  };
+  
+  const moveFieldDown = (index) => {
+    if (index === formFields.length - 1) return; // Already at the bottom
+    const newFields = [...formFields];
+    [newFields[index], newFields[index + 1]] = [newFields[index + 1], newFields[index]];
+    setFormFields(newFields);
   };
   
   // Update a field
