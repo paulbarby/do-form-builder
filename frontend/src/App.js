@@ -886,7 +886,9 @@ function App() {
       <div className="navbar">
         <h1 className="text-xl font-bold">Form Builder</h1>
       </div>
-      <FormBuilder />
+      <DragDropContext>
+        <FormBuilder />
+      </DragDropContext>
     </div>
   );
 }
