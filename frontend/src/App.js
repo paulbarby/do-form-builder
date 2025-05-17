@@ -609,6 +609,8 @@ const FormBuilder = () => {
     // Dropped outside a droppable area
     if (!destination) return;
     
+    console.log('Drag end:', { source, destination, draggableId });
+    
     // Reordering within form fields
     if (source.droppableId === 'FORM_FIELDS' && destination.droppableId === 'FORM_FIELDS') {
       const reorderedFields = Array.from(formFields);
