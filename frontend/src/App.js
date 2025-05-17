@@ -917,10 +917,10 @@ const FormBuilder = () => {
                 </button>
               </div>
               {formFields.length > 0 ? (
-                <div className="bg-gray-800 text-gray-100 p-4 rounded-lg overflow-auto max-h-[600px]">
-                  <pre className="whitespace-pre-wrap text-sm">
+                <div className="bg-gray-800 p-4 rounded-lg overflow-auto max-h-[600px]">
+                  <code className="whitespace-pre-wrap text-sm text-white block font-mono">
 {JSON.stringify(generateCleanJson(), null, 2)}
-                  </pre>
+                  </code>
                 </div>
               ) : (
                 <div className="text-center text-gray-500 py-10">
