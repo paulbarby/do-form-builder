@@ -532,20 +532,36 @@ const FormPreview = ({ formFields }) => {
             
             {field.type === 'radio' && (
               <div className="space-y-2">
-                {field.values?.map((option, i) => (
-                  <div key={i} className="flex items-center">
-                    <input
-                      type="radio"
-                      name={field.name}
-                      id={`${field.name}_${i}`}
-                      value={option.value}
-                      className="mr-2"
-                      required={field.required}
-                      onChange={handleFieldChange}
-                    />
-                    <label htmlFor={`${field.name}_${i}`} className="text-sm">{option.label}</label>
-                  </div>
-                ))}
+                {Array.isArray(field.values) 
+                  ? field.values.map((option, i) => (
+                      <div key={i} className="flex items-center">
+                        <input
+                          type="radio"
+                          name={field.name}
+                          id={`${field.name}_${i}`}
+                          value={option.value}
+                          className="mr-2"
+                          required={field.required}
+                          onChange={handleFieldChange}
+                        />
+                        <label htmlFor={`${field.name}_${i}`} className="text-sm">{option.label}</label>
+                      </div>
+                    ))
+                  : Object.values(field.values || {}).map((option, i) => (
+                      <div key={i} className="flex items-center">
+                        <input
+                          type="radio"
+                          name={field.name}
+                          id={`${field.name}_${i}`}
+                          value={option.value}
+                          className="mr-2"
+                          required={field.required}
+                          onChange={handleFieldChange}
+                        />
+                        <label htmlFor={`${field.name}_${i}`} className="text-sm">{option.label}</label>
+                      </div>
+                    ))
+                }
               </div>
             )}
             
