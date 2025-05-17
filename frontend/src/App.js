@@ -756,7 +756,11 @@ const FormBuilder = () => {
             </button>
             <button
               className={`tab ${activeTab === 'json' ? 'active' : 'inactive'}`}
-              onClick={() => setActiveTab('json')}
+              onClick={() => {
+                console.log("Setting activeTab to 'json'");
+                setActiveTab('json');
+                console.log("New activeTab value:", 'json');
+              }}
             >
               JSON
             </button>
