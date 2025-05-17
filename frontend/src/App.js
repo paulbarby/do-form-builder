@@ -794,36 +794,23 @@ const FormBuilder = () => {
               <div className="md:col-span-1">
                 <div className="bg-white rounded-lg shadow p-4">
                   <h2 className="text-lg font-medium text-gray-900 mb-3">Available Fields</h2>
-                  <Droppable droppableId="FIELD_TYPES" isDropDisabled={true}>
-                    {(provided) => (
-                      <div className="space-y-2" ref={provided.innerRef} {...provided.droppableProps}>
-                        {FIELD_TYPES.map((fieldType, index) => (
-                          <Draggable
-                            key={fieldType.id}
-                            draggableId={`type-${fieldType.id}`}
-                            index={index}
-                          >
-                            {(provided, snapshot) => (
-                              <div
-                                ref={provided.innerRef}
-                                {...provided.draggableProps}
-                                {...provided.dragHandleProps}
-                                className={`sidebar-item flex items-center ${snapshot.isDragging ? "bg-blue-50 border-blue-300" : ""}`}
-                              >
-                                <span className="mr-2">
-                                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-5 h-5 text-gray-400">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 4v16M17 4v16M3 8h18M3 16h18" />
-                                  </svg>
-                                </span>
-                                {fieldType.label}
-                              </div>
-                            )}
-                          </Draggable>
-                        ))}
-                        {provided.placeholder}
-                      </div>
-                    )}
-                  </Droppable>
+                  <p className="text-gray-500 text-sm mb-4">Click buttons below to add fields to your form</p>
+                  
+                  <div className="grid grid-cols-2 gap-2">
+                    {FIELD_TYPES.map((fieldType) => (
+                      <button
+                        key={fieldType.id}
+                        className="btn btn-secondary text-sm py-2"
+                        onClick={() => {
+                          const newField = createField(fieldType.id, formFields);
+                          setFormFields([...formFields, newField]);
+                          setSelectedFieldId(newField.id);
+                        }}
+                      >
+                        {fieldType.label}
+                      </button>
+                    ))}
+                  </div>
                 </div>
                 <div className="mt-4 p-4 bg-white rounded-lg shadow">
                   <button 
