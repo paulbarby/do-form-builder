@@ -1,38 +1,100 @@
+
 .App {
-    text-align: center;
-}
-
-.App-logo {
-    height: 40vmin;
-    pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-        animation: App-logo-spin infinite 20s linear;
-    }
+  @apply min-h-screen bg-slate-50;
 }
 
 .App-header {
-    background-color: #0f0f10;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
+  @apply bg-white shadow-md mb-4;
 }
 
-.App-link {
-    color: #61dafb;
+.field-item {
+  @apply p-3 bg-white rounded-lg shadow mb-3 border border-gray-200 cursor-move;
 }
 
-@keyframes App-logo-spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+.field-item.dragging {
+  @apply border-blue-500 shadow-lg;
+}
+
+.sidebar-item {
+  @apply p-2 mb-2 rounded bg-white shadow-sm border border-gray-200 hover:bg-blue-50 hover:border-blue-300 cursor-grab;
+}
+
+.form-area {
+  @apply bg-gray-50 border-2 border-dashed border-gray-300 rounded-lg p-4 min-h-[300px] mb-4;
+}
+
+.property-panel {
+  @apply bg-white rounded-lg shadow p-4 mb-4;
+}
+
+.json-preview {
+  @apply bg-gray-800 text-gray-100 p-4 rounded-lg overflow-auto max-h-[300px];
+}
+
+.field-wrapper {
+  @apply relative;
+}
+
+.field-actions {
+  @apply absolute top-0 right-0 p-1;
+}
+
+.selected-field {
+  @apply border-blue-500 bg-blue-50;
+}
+
+.condition-rule {
+  @apply p-3 mb-2 rounded-lg bg-blue-50 border border-blue-200;
+}
+
+.form-control {
+  @apply block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6;
+}
+
+.checkbox-control {
+  @apply h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500;
+}
+
+.form-select {
+  @apply block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-blue-600 sm:text-sm sm:leading-6;
+}
+
+.form-label {
+  @apply block text-sm font-medium leading-6 text-gray-900 mb-1;
+}
+
+.error-message {
+  @apply mt-1 text-sm text-red-500;
+}
+
+.tab {
+  @apply p-2 font-medium border-b-2 cursor-pointer;
+}
+
+.tab.active {
+  @apply border-blue-500 text-blue-600;
+}
+
+.tab.inactive {
+  @apply border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300;
+}
+
+.navbar {
+  @apply bg-gray-800 text-white p-4;
+}
+
+.btn {
+  @apply px-4 py-2 rounded-md font-medium focus:outline-none focus:ring-2 focus:ring-offset-2;
+}
+
+.btn-primary {
+  @apply bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500;
+}
+
+.btn-secondary {
+  @apply bg-gray-200 text-gray-800 hover:bg-gray-300 focus:ring-gray-500;
+}
+
+.btn-danger {
+  @apply bg-red-600 text-white hover:bg-red-700 focus:ring-red-500;
 }
