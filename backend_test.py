@@ -115,6 +115,17 @@ class FormBuilderAPITester:
             200
         )
         
+        # If the first attempt fails, try with a different ID format
+        if not success:
+            print("Retrying with different ID format...")
+            # Try with the MongoDB _id format
+            success, response = self.run_test(
+                "Get Form by ID (retry)",
+                "GET",
+                f"forms/{form_id}",
+                200
+            )
+        
         if success:
             print(f"Retrieved form: {response['name']}")
             print(f"Form has {len(response['fields'])} fields")
