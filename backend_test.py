@@ -201,18 +201,28 @@ class FormBuilderAPITester:
             200
         )
         
-        if success:
-            print(f"Successfully deleted form with ID: {form_id}")
-        else:
-            # Some APIs return 200 instead of 204 for successful deletion
+        # If the first attempt fails, try with a different ID format
+        if not success:
+            print("Retrying with different ID format...")
             success, _ = self.run_test(
-                "Delete Form (alternate status)",
+                "Delete Form (retry)",
                 "DELETE",
                 f"forms/{form_id}",
                 200
             )
+        
+        if success:
+            print(f"Successfully deleted form with ID: {form_id}")
+        else:
+            # Some APIs return 204 instead of 200 for successful deletion
+            success, _ = self.run_test(
+                "Delete Form (alternate status)",
+                "DELETE",
+                f"forms/{form_id}",
+                204
+            )
             if success:
-                print(f"Successfully deleted form with ID: {form_id} (with status 200 instead of 204)")
+                print(f"Successfully deleted form with ID: {form_id} (with status 204 instead of 200)")
         
         return success
 
