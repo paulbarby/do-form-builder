@@ -570,12 +570,32 @@ const FormPreview = ({ formFields }) => {
 
 // JSON Display component
 const JsonDisplay = ({ json }) => {
+  const [copied, setCopied] = useState(false);
+  
+  const handleCopy = () => {
+    navigator.clipboard.writeText(JSON.stringify(json, null, 2));
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+  
   return (
-    <div className="property-panel">
-      <h2 className="text-lg font-medium text-gray-900 mb-3">Form JSON</h2>
-      <pre className="json-preview">
-        {JSON.stringify(json, null, 2)}
-      </pre>
+    <div className="container mx-auto px-4">
+      <div className="bg-white rounded-lg shadow p-4 mb-4">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-lg font-medium text-gray-900">Form JSON</h2>
+          <button 
+            className="btn btn-secondary text-sm"
+            onClick={handleCopy}
+          >
+            {copied ? 'Copied!' : 'Copy JSON'}
+          </button>
+        </div>
+        <div className="overflow-auto">
+          <pre className="json-preview text-sm">
+            {JSON.stringify(json, null, 2)}
+          </pre>
+        </div>
+      </div>
     </div>
   );
 };
