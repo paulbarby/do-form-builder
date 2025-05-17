@@ -905,7 +905,7 @@ const FormBuilder = () => {
               {formFields.length > 0 ? (
                 <div className="bg-gray-800 text-gray-100 p-4 rounded-lg overflow-auto max-h-[600px]">
                   <pre className="whitespace-pre-wrap text-sm">
-                    {JSON.stringify(generateCleanJson(), null, 2)}
+{JSON.stringify(generateCleanJson(), null, 2)}
                   </pre>
                 </div>
               ) : (
