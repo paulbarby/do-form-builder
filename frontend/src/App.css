@@ -52,7 +52,8 @@
 }
 
 .selected-field {
-  @apply border-blue-500 bg-blue-50;
+  @apply border-blue-500 bg-blue-50 ring-2 ring-blue-500;
+  transition: all 0.2s ease;
 }
 
 .condition-rule {
