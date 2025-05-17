@@ -483,15 +483,26 @@ const FormPreview = ({ formFields }) => {
                 multiple={field.multiple}
                 onChange={handleFieldChange}
               >
-                {field.values?.map((option, i) => (
-                  <option 
-                    key={i} 
-                    value={option.value}
-                    selected={option.selected}
-                  >
-                    {option.label}
-                  </option>
-                ))}
+                {Array.isArray(field.values) 
+                  ? field.values.map((option, i) => (
+                      <option 
+                        key={i} 
+                        value={option.value}
+                        selected={option.selected}
+                      >
+                        {option.label}
+                      </option>
+                    ))
+                  : Object.values(field.values || {}).map((option, i) => (
+                      <option 
+                        key={i} 
+                        value={option.value}
+                        selected={option.selected}
+                      >
+                        {option.label}
+                      </option>
+                    ))
+                }
               </select>
             )}
             
